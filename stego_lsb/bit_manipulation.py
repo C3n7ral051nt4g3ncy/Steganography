@@ -106,8 +106,7 @@ def lsb_deinterleave_list(carrier, num_bits, num_lsb):
 
     plen = roundup(num_bits / num_lsb)
     carrier_bytes = np.array(carrier[:plen], dtype=np.uint8).tobytes()
-    deinterleaved = lsb_deinterleave_bytes(carrier_bytes, num_bits, num_lsb)
-    return deinterleaved
+    return lsb_deinterleave_bytes(carrier_bytes, num_bits, num_lsb)
 
 
 def test(carrier_len=10 ** 7, payload_len=10 ** 6):

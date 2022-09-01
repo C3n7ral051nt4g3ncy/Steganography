@@ -56,7 +56,7 @@ def hide_data(sound_path, file_path, output_path, num_lsb):
             f"requires {required_lsb} LSBs, using {num_lsb}"
         )
 
-    if sample_width != 1 and sample_width != 2:
+    if sample_width not in [1, 2]:
         # Python's wave module doesn't support higher sample widths
         raise ValueError("File has an unsupported bit-depth")
 
@@ -92,7 +92,7 @@ def recover_data(sound_path, output_path, num_lsb, bytes_to_recover):
     sound_frames = sound.readframes(num_frames)
     log.debug("Files read".ljust(30) + f" in {time() - start:.2f}s")
 
-    if sample_width != 1 and sample_width != 2:
+    if sample_width not in [1, 2]:
         # Python's wave module doesn't support higher sample widths
         raise ValueError("File has an unsupported bit-depth")
 
@@ -105,7 +105,6 @@ def recover_data(sound_path, output_path, num_lsb, bytes_to_recover):
     )
 
     start = time()
-    output_file = open(output_path, "wb+")
-    output_file.write(bytes(data))
-    output_file.close()
+    with open(output_path, "wb+") as output_file:
+        output_file.write(bytes(data))
     log.debug("Written output file".ljust(30) + f" in {time() - start:.2f}s")

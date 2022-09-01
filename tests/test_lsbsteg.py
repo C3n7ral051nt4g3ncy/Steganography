@@ -22,10 +22,10 @@ class TestLSBSteg(unittest.TestCase):
         filename = "".join(
             choice(string.ascii_lowercase) for _ in range(filename_length)
         )
-        png_input_filename = filename + ".png"
-        payload_input_filename = filename + ".txt"
-        png_output_filename = filename + "_steg.png"
-        payload_output_filename = filename + "_recovered.txt"
+        png_input_filename = f"{filename}.png"
+        payload_input_filename = f"{filename}.txt"
+        png_output_filename = f"{filename}_steg.png"
+        payload_output_filename = f"{filename}_recovered.txt"
 
         np.random.seed(0)
         for _ in range(num_trials):

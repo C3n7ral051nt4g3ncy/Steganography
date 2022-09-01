@@ -39,4 +39,4 @@ def show_lsb(image_path, n):
     image.putdata(color_data)
     log.debug(f"Runtime: {time() - start:.2f}s")
     file_name, file_extension = os.path.splitext(image_path)
-    image.save(file_name + "_{}LSBs".format(n) + file_extension)
+    image.save(file_name + f"_{n}LSBs" + file_extension)

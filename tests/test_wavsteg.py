@@ -9,7 +9,7 @@ import wave
 
 class TestWavSteg(unittest.TestCase):
     def write_random_wav(self, filename, num_channels, sample_width, framerate, num_frames):
-        if sample_width != 1 and sample_width != 2:
+        if sample_width not in [1, 2]:
             # WavSteg doesn't support higher sample widths
             raise ValueError("File has an unsupported bit-depth")
 
@@ -18,11 +18,7 @@ class TestWavSteg(unittest.TestCase):
         file.setsampwidth(sample_width)
         file.setframerate(framerate)
 
-        if sample_width == 1:
-            dtype = np.uint8
-        else:
-            dtype = np.uint16
-
+        dtype = np.uint8 if sample_width == 1 else np.uint16
         data = np.random.randint(
             0, 2 ** (8 * sample_width), dtype=dtype, size=num_frames * num_channels
         )
@@ -36,10 +32,10 @@ class TestWavSteg(unittest.TestCase):
         filename = "".join(
             choice(string.ascii_lowercase) for _ in range(filename_length)
         )
-        wav_input_filename = filename + ".wav"
-        payload_input_filename = filename + ".txt"
-        wav_output_filename = filename + "_steg.wav"
-        payload_output_filename = filename + "_recovered.txt"
+        wav_input_filename = f"{filename}.wav"
+        payload_input_filename = f"{filename}.txt"
+        wav_output_filename = f"{filename}_steg.wav"
+        payload_output_filename = f"{filename}_recovered.txt"
 
         np.random.seed(0)
         for _ in range(num_trials):
